@@ -34,183 +34,88 @@
     .btn.primary{background-image:linear-gradient(225deg,var(--brand1),var(--brand2));color:#fff}
     .msg{margin-top:12px;font-size:14px;min-height:1.2em}
     .msg.success{color:#0d6a2a}.msg.error{color:#b91c1c}
-    /* validation */
     .control.is-invalid{border-color:#ef4444!important;box-shadow:0 0 0 3px rgba(239,68,68,.2)!important}
     .control.is-valid{border-color:#16a34a!important;box-shadow:0 0 0 3px rgba(22,163,74,.2)!important}
     .hidden{display:none!important}
-
-    /* SUCCESS MODAL (как на скрине) */
     .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:999;background:rgba(0,0,0,.5)}
     .show{display:block!important}
-    .modal-wrap{
-      width:min(860px,94vw); background:#fff; border-radius:26px; padding:28px; 
-      box-shadow:0 30px 120px rgba(0,0,0,.45);
-    }
+    .modal-wrap{width:min(860px,94vw); background:#fff; border-radius:26px; padding:28px; box-shadow:0 30px 120px rgba(0,0,0,.45);}
     .brand-band{display:flex;align-items:center;gap:16px;padding:6px 8px 18px}
     .brand-band img{height:56px;width:auto}
     .brand-band .partners{margin-left:auto;font-weight:700;letter-spacing:.02em;color:#4b5563}
-    .success-panel{
-      display: none;
-      background:linear-gradient(#ffffff,#fafafa); border-radius:22px; padding:26px; 
-      box-shadow:0 18px 38px rgba(0,0,0,.08) inset, 0 14px 40px rgba(0,0,0,.08);
-      margin:25px 8px 10px;
-    }
+    .success-panel{display: none;background:linear-gradient(#ffffff,#fafafa); border-radius:22px; padding:26px; box-shadow:0 18px 38px rgba(0,0,0,.08) inset, 0 14px 40px rgba(0,0,0,.08);margin:25px 8px 10px;}
     .success-title{font-size:28px;color:#0d1b2a;margin:0 0 6px;text-align:center;font-weight:800}
     .success-sub{color:#475569;text-align:center;margin:0 0 18px}
-    .btn-cta{
-      display:inline-flex;align-items:center;justify-content:center;min-width:140px;
-      padding:0 22px;height:46px;border-radius:14px;border:0;cursor:pointer;
-      background-image:linear-gradient(225deg,var(--brand2),var(--brand1));color:#fff;font-weight:700;font-size:16px;
-      box-shadow:0 6px 20px rgba(158,84,187,.35); transition:transform .05s ease}
+    .btn-cta{display:inline-flex;align-items:center;justify-content:center;min-width:140px;padding:0 22px;height:46px;border-radius:14px;border:0;cursor:pointer;background-image:linear-gradient(225deg,var(--brand2),var(--brand1));color:#fff;font-weight:700;font-size:16px;box-shadow:0 6px 20px rgba(158,84,187,.35); transition:transform .05s ease}
     .btn-cta:active{transform:translateY(1px)}
     .success-cta{display:flex;justify-content:center}
-    #login {text-decoration: none;
-    display: flex;
-    justify-content: center;
-    color: #0b1b3a;}
+    #login {text-decoration: none;display: flex;justify-content: center;color: #0b1b3a;}
   </style>
 </head>
 <body>
 
-  <!-- форма -->
   <div id="card" class="card">
     <div class="header">
       <div class="logo">
-        <!-- поставьте свой логотип -->
         <img src="https://cdn.prod.website-files.com/671cacb5ad794eb512198be7/67bd1dd0b07424fd160bc81e_Asset%203%20(1).svg" alt="swipeyai partners">
       </div>
-      <div  class="success-panel" id="success-panel">
+      <div class="success-panel" id="success-panel">
         <h2 id="m-title" class="success-title">Registration Completed 🎉</h2>
         <p class="success-sub">Please check your email to activate your account.</p>
-        <a href="https://affiliate.swipey.ai/">
-       <button class="btn-cta">Login</button>
-          </a>
+        <a href="https://affiliate.swipey.ai/"><button class="btn-cta">Login</button></a>
       </div>
       <h1 id="reg_title" class="title">Registration</h1>
       <p id="logo" class="subtitle">Your credentials</p>
     </div>
 
     <form id="regForm" novalidate>
-      <div class="row">
-        <label for="email">Login</label>
-        <input id="email" name="email" type="email" placeholder="your@email.com" required class="control" />
-      </div>
-      <div class="row">
-        <label for="password">Password</label>
-        <input id="password" name="password" type="password" placeholder="Password" minlength="8" required class="control" />
-      </div>
-
+      <div class="row"><label for="email">Login</label><input id="email" name="email" type="email" placeholder="your@email.com" required class="control" /></div>
+      <div class="row"><label for="password">Password</label><input id="password" name="password" type="password" placeholder="Password" minlength="8" required class="control" /></div>
       <hr class="divider" />
-
-      <div class="row">
-        <label for="firstName">First Name</label>
-        <input id="firstName" name="firstName" placeholder="First name" required class="control" />
-      </div>
-      <div class="row">
-        <label for="lastName">Last Name</label>
-        <input id="lastName" name="lastName" placeholder="Last name" required class="control" />
-      </div>
-
-      <div class="row">
-        <label for="messengerType">Messenger type</label>
-        <select id="messengerType" name="messengerType" required class="control">
-          <option value="" disabled selected>Choose…</option>
-          <option>Telegram</option><option>WhatsApp</option><option>Skype</option><option>WeChat</option><option>Other</option>
-        </select>
-      </div>
-
-      <div class="row">
-        <label for="messenger">Messenger</label>
-        <input id="messenger" name="messenger" placeholder="Username / Phone / Link" class="control" />
-      </div>
-
+      <div class="row"><label for="firstName">First Name</label><input id="firstName" name="firstName" placeholder="First name" required class="control" /></div>
+      <div class="row"><label for="lastName">Last Name</label><input id="lastName" name="lastName" placeholder="Last name" required class="control" /></div>
+      <div class="row"><label for="messengerType">Messenger type</label><select id="messengerType" name="messengerType" required class="control"><option value="" disabled selected>Choose…</option><option>Telegram</option><option>WhatsApp</option><option>Skype</option><option>WeChat</option><option>Other</option></select></div>
+      <div class="row"><label for="messenger">Messenger</label><input id="messenger" name="messenger" placeholder="Username / Phone / Link" class="control" /></div>
       <button id="submitBtn" class="btn primary" type="submit">Sign Up</button>
-
       <div id="msg" class="msg"></div>
-      
     </form>
-<a id="login" href="https://affiliate.swipey.ai/">Login</a>
-   
+    <a id="login" href="https://affiliate.swipey.ai/">Login</a>
   </div>
 
-  
+<script>
+  const CLICKID_COOKIE='clickid', CLICKID_TTL_DAYS=7, REF_COOKIE='ref', REF_TTL_DAYS=30, UTM_TTL_DAYS=30;
 
- <script>
-  /** CONFIG **/
-  const POSTBACK_TYPE = 'registration';          // оставлено, если захотите показать где-то в UI
-  const CLICKID_COOKIE = 'clickid';
-  const CLICKID_TTL_DAYS = 7;
+  function setCookie(name,value,days){const d=new Date();d.setTime(d.getTime()+days*864e5);document.cookie=`${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;}
+  function getCookie(name){const m=document.cookie.match(new RegExp('(?:^|; )'+name.replace(/[-[\\]{}()*+?.,^$|#\\s]/g,'\\$&')+'=([^;]*)'));return m?decodeURIComponent(m[1]):'';}
 
-  // элементы
-  const form = document.getElementById('regForm');
-  const btn = document.getElementById('submitBtn');
-  const msg = document.getElementById('msg');
-  const card = document.getElementById('card');
-  const overlay = document.getElementById('success-panel');
-  const logo = document.getElementById('logo');
-  const reg_title = document.getElementById('reg_title');
-    const lg = document.getElementById('login');
-
-  /** Cookie helpers **/
-  function setCookie(name, value, days){
-    const d = new Date();
-    d.setTime(d.getTime() + (days*24*60*60*1000));
-    const expires = "expires="+ d.toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; ${expires}; path=/; SameSite=Lax`;
-  }
-  function getCookie(name){
-    const m = document.cookie.match(new RegExp('(?:^|; )'+name.replace(/[-[\]{}()*+?.,\\^$|#\\s]/g,'\\$&')+'=([^;]*)'));
-    return m ? decodeURIComponent(m[1]) : '';
-  }
-
-  /** ClickID logic **/
-  function readClickIdFromUrl(){
-    const p = new URLSearchParams(location.search);
-    return p.get('clickid') || '';
-  }
-  function saveClickIdIfInUrl(){
-    const cid = readClickIdFromUrl();
-    if (cid) setCookie(CLICKID_COOKIE, cid, CLICKID_TTL_DAYS);
-    return cid;
-  }
-  function getClickId(){
-    return getCookie(CLICKID_COOKIE) || readClickIdFromUrl() || '';
-  }
-  // сохранить clickid при заходе, если есть в URL
+  function readClickIdFromUrl(){return new URLSearchParams(location.search).get('clickid')||'';}
+  function saveClickIdIfInUrl(){const cid=readClickIdFromUrl();if(cid)setCookie(CLICKID_COOKIE,cid,CLICKID_TTL_DAYS);}
+  function getClickId(){return getCookie(CLICKID_COOKIE)||readClickIdFromUrl()||'';}
   saveClickIdIfInUrl();
 
-  /** Валидация **/
-  const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, passRe=/^.{8,}$/;
-  function setValid(el, ok){ el.classList.remove('is-valid','is-invalid'); el.classList.add(ok?'is-valid':'is-invalid'); }
-  function validateField(el){
-    const v = el.value.trim();
-    let ok = true;
-    if(el.id==='email') ok = emailRe.test(v);
-    else if(el.id==='password') ok = passRe.test(v);
-    else if(el.id==='firstName'||el.id==='lastName') ok = v.length>0;
-    else if(el.id==='messengerType') ok = !!v;
-    setValid(el, ok); return ok;
-  }
-  ['email','password','firstName','lastName','messenger'].forEach(id=>{
-    const el=document.getElementById(id);
-    el.addEventListener('input',()=>validateField(el));
-    el.addEventListener('blur',()=>validateField(el));
-  });
-  document.getElementById('messengerType').addEventListener('change', e=>validateField(e.target));
-  function validateForm(){
-    return ['email','password','firstName','lastName','messengerType']
-      .map(id=>validateField(document.getElementById(id))).every(Boolean);
-  }
+  // --- REF ---
+  (function(){const ref=new URLSearchParams(location.search).get('ref');if(ref)setCookie(REF_COOKIE,ref,REF_TTL_DAYS);})();
+  function getRef(){return getCookie(REF_COOKIE)||new URLSearchParams(location.search).get('ref')||'';}
 
-  /** Submit (теперь → /api/lead, без фронтового постбека) **/
-  form.addEventListener('submit', async (e)=>{
+  // --- UTM ---
+  (function(){const p=new URLSearchParams(location.search);const s=p.get('utm_source');const c=p.get('utm_campaign');if(s)setCookie('utm_source',s,UTM_TTL_DAYS);if(c)setCookie('utm_campaign',c,UTM_TTL_DAYS);})();
+  function getUtmSource(){return getCookie('utm_source')||new URLSearchParams(location.search).get('utm_source')||'';}
+  function getUtmCampaign(){return getCookie('utm_campaign')||new URLSearchParams(location.search).get('utm_campaign')||'';}
+
+  const form=document.getElementById('regForm'),btn=document.getElementById('submitBtn'),msg=document.getElementById('msg'),
+  overlay=document.getElementById('success-panel'),logo=document.getElementById('logo'),reg_title=document.getElementById('reg_title'),lg=document.getElementById('login');
+
+  const emailRe=/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/i,passRe=/^.{8,}$/;
+  function setValid(el,ok){el.classList.remove('is-valid','is-invalid');el.classList.add(ok?'is-valid':'is-invalid');}
+  function validateField(el){const v=el.value.trim();let ok=true;if(el.id==='email')ok=emailRe.test(v);else if(el.id==='password')ok=passRe.test(v);else if(['firstName','lastName'].includes(el.id))ok=v.length>0;else if(el.id==='messengerType')ok=!!v;setValid(el,ok);return ok;}
+  ['email','password','firstName','lastName','messenger'].forEach(id=>{const el=document.getElementById(id);el.addEventListener('input',()=>validateField(el));el.addEventListener('blur',()=>validateField(el));});
+  document.getElementById('messengerType').addEventListener('change',e=>validateField(e.target));
+  function validateForm(){return ['email','password','firstName','lastName','messengerType'].map(id=>validateField(document.getElementById(id))).every(Boolean);}
+
+  form.addEventListener('submit',async e=>{
     e.preventDefault();
-    if(!validateForm()){
-      msg.className='msg error';
-      msg.textContent='Please correct highlighted fields.';
-      return;
-    }
-    msg.textContent=''; btn.disabled=true; btn.textContent='Submitting…';
+    if(!validateForm()){msg.className='msg error';msg.textContent='Please correct highlighted fields.';return;}
+    msg.textContent='';btn.disabled=true;btn.textContent='Submitting…';
 
     const payload={
       email:form.email.value.trim(),
@@ -219,45 +124,18 @@
       lastName:form.lastName.value.trim(),
       messengerType:form.messengerType.value,
       messenger:form.messenger.value.trim(),
-      clickid: getClickId()
+      clickid:getClickId(),
+      ref:getRef(),
+      utm_source:getUtmSource(),
+      utm_campaign:getUtmCampaign()
     };
 
     try{
-      // важное изменение: отправляем на /api/lead (очередь + лог в sheets)
-      const r = await fetch('/api/lead', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(payload)
-      });
-      const data = await r.json();
-      if(!r.ok) throw new Error(data.error||'Request failed');
-
-      // моментальный «успех» для пользователя
-      form.classList.add('hidden');
-      logo.classList.add('hidden');
-      reg_title.classList.add('hidden');
-      lg.classList.add('hidden');
-      overlay.classList.add('show');
-
-      // постбек уехал на сервер (в воркер), здесь больше ничего не шлём
-    }catch(err){
-      msg.className='msg error';
-      msg.textContent='Error: '+err.message;
-    }finally{
-      btn.disabled=false; btn.textContent='Sign Up';
-    }
+      const r=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const data=await r.json();if(!r.ok)throw new Error(data.error||'Request failed');
+      form.classList.add('hidden');logo.classList.add('hidden');reg_title.classList.add('hidden');lg.classList.add('hidden');overlay.classList.add('show');
+    }catch(err){msg.className='msg error';msg.textContent='Error: '+err.message;}finally{btn.disabled=false;btn.textContent='Sign Up';}
   });
-
-  /** Закрытие модалки **/
-  function closeSuccess(){
-    overlay.classList.remove('show');
-  }
-  closeModal.addEventListener('click', closeSuccess);
-  overlay.addEventListener('click', e=>{ if(e.target===overlay) closeSuccess(); });
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && overlay.classList.contains('show')) closeSuccess(); });
 </script>
-
-
-  
 </body>
 </html>
