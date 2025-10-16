@@ -331,28 +331,52 @@
     <script src="/assets/webflow.schunk.50d850aa4962b686.js" type="text/javascript"></script>
     <script src="/assets/webflow.schunk.baf1f7c965ee0e48.js" type="text/javascript"></script>
     <script src="/assets/webflow.48ea7eff.89adea7d7e742887.js" type="text/javascript"></script>
- <script>
+<script>
 (function(){
-  const params = window.location.search; // всё, что после ?
-  if (!params) return;
+  const params = new URLSearchParams(window.location.search);
+  if (![...params.keys()].length) return;
 
-  // находим все ссылки ведущие на /signup
+  const COOKIE_TTL_DAYS = 7;
+
+  // --- вспомогательная функция для установки куки ---
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 864e5);
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
+  }
+
+  // --- сохраняем utm_source, utm_campaign, ref ---
+  const saveParams = ['utm_source', 'utm_campaign', 'ref'];
+  saveParams.forEach(k => {
+    const v = params.get(k);
+    if (v) setCookie(k, v, COOKIE_TTL_DAYS);
+  });
+
+  // --- прокидываем все параметры в ссылки /signup ---
+  const query = window.location.search.replace(/^\?+/, '');
+  if (!query) return;
   const links = document.querySelectorAll('a[href^="/signup"], a[href="/signup"]');
+
   links.forEach(link => {
     try {
-      const url = new URL(link.href, window.location.origin);
-      // если уже есть параметры — не перезаписываем
-      const existing = url.search ? url.search + '&' + params.slice(1) : params;
-      url.search = existing.replace(/&&+/g,'&');
+      const url = new URL(link.getAttribute('href'), window.location.origin);
+      // если в ссылке уже есть параметры — объединяем
+      const existing = url.search ? url.search + '&' + query : '?' + query;
+      // убираем возможные дубликаты &
+      url.search = existing.replace(/\?&+|&&+/g, '&').replace(/\?{2,}/g, '?');
       link.href = url.pathname + url.search;
-    } catch(e) { console.warn('param append fail', e); }
+    } catch (e) {
+      console.warn('param append fail', e);
+    }
   });
 })();
 </script>
+
 
 </body>
 
 
 
 </html>
+
 
