@@ -15,7 +15,7 @@ if (!BROWSERLESS_WS) {
 
 /** === Основной раннер регистрации === */
 async function runSignup(payload) {
-  const { email, password, firstName, lastName, messengerType, messenger } = payload;
+  const { email, password, firstName, lastName, messengerType, messenger, ref } = payload;
 
   let browser;
   try {
@@ -42,8 +42,12 @@ async function runSignup(payload) {
     });
     page.setDefaultTimeout(15000);
 
+    // URL c поддержкой ?ref=...
+    const baseUrl = 'https://affiliate.swipey.ai/signup';
+    const signupUrl = ref ? `${baseUrl}?ref=${encodeURIComponent(ref)}` : baseUrl;
+
     // ШАГ 1
-    await page.goto('https://affiliate.swipey.ai/signup', { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await page.goto(signupUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
     await page.locator('input[name="email"][type="text"], input[name="email"][type="email"]').fill(email);
     await page.locator('input[name="password"][type="password"]').fill(password);
 
