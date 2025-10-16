@@ -82,7 +82,7 @@
       <div  class="success-panel" id="success-panel">
         <h2 id="m-title" class="success-title">Registration Completed 🎉</h2>
         <p class="success-sub">Please check your email to activate your account.</p>
-       
+       <button class="btn-cta">Login</button>
       </div>
       <h1 id="reg_title" class="title">Registration</h1>
       <p id="logo" class="subtitle">Your credentials</p>
@@ -147,6 +147,7 @@
   const overlay = document.getElementById('success-panel');
   const logo = document.getElementById('logo');
   const reg_title = document.getElementById('reg_title');
+    const lg = document.getElementById('login');
 
   /** Cookie helpers **/
   function setCookie(name, value, days){
@@ -233,6 +234,7 @@
       form.classList.add('hidden');
       logo.classList.add('hidden');
       reg_title.classList.add('hidden');
+      lg.classList.add('hidden');
       overlay.classList.add('show');
 
       // постбек уехал на сервер (в воркер), здесь больше ничего не шлём
