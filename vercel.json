@@ -1,28 +1,12 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "public": true,
   "functions": {
     "api/signup-proxy.js": {
       "maxDuration": 60,
       "memory": 1024
     }
   },
-  "routes": [
-    {
-      "src": "^/signup$",
-      "dest": "/signup/index.html"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/signup-proxy",
-      "dest": "/api/signup-proxy"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+  "rewrites": [
+    { "source": "/signup", "destination": "/signup/index.html" },
+    { "source": "/signup-proxy", "destination": "/api/signup-proxy" }
   ]
 }
