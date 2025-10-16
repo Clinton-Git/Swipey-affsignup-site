@@ -331,9 +331,28 @@
     <script src="/assets/webflow.schunk.50d850aa4962b686.js" type="text/javascript"></script>
     <script src="/assets/webflow.schunk.baf1f7c965ee0e48.js" type="text/javascript"></script>
     <script src="/assets/webflow.48ea7eff.89adea7d7e742887.js" type="text/javascript"></script>
- 
+ <script>
+(function(){
+  const params = window.location.search; // всё, что после ?
+  if (!params) return;
+
+  // находим все ссылки ведущие на /signup
+  const links = document.querySelectorAll('a[href^="/signup"], a[href="/signup"]');
+  links.forEach(link => {
+    try {
+      const url = new URL(link.href, window.location.origin);
+      // если уже есть параметры — не перезаписываем
+      const existing = url.search ? url.search + '&' + params.slice(1) : params;
+      url.search = existing.replace(/&&+/g,'&');
+      link.href = url.pathname + url.search;
+    } catch(e) { console.warn('param append fail', e); }
+  });
+})();
+</script>
+
 </body>
 
 
 
 </html>
+
