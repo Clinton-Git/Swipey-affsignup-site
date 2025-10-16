@@ -1,0 +1,14 @@
+{
+  "name": "swipey-autosignup",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+     "@upstash/qstash": "^2.6.0",
+    "playwright-core": "^1.48.2",
+    "cross-fetch": "^4.0.0"
+  }
+}

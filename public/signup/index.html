@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Registration</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="shortcut icon" href="https://swipey.ai/icons/favicon.png" type="image/x-icon">
+  <meta property="og:title" content="Swipey">
+  <meta property="og:image" content="https://swipey.ai/icons/favicon.png">
+  <meta name="twitter:title" content="Swipey">
+  <meta name="twitter:image" content="https://swipey.ai/icons/favicon.png">
+  <script src="https://rtrk.swipey.club/uniclick.js?attribution=lastpaid&cookiedomain=swipey-affsignup-browserless.vercel.app&cookieduration=90&defaultcampaignid=68efd06d847369e1b5626f62&regviewonce=false"></script>
+  <style>
+    :root{
+      --brand1:#fe6283; --brand2:#9e54bb; --ink:#0b1b3a; --muted:#6b7280;
+      --panel:#ffffff; --bg:#19121c; --ring:#91b9f7;
+    }
+    body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .card{width:560px;max-width:83vw;margin:6vh auto;background:#fff;padding:28px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+    .header{text-align:center;margin-bottom:18px}
+    .logo img{width:200px;height:auto;object-fit:contain}
+    .title{font-size:28px;line-height:1.2;margin:10px 0 2px;color:var(--ink);font-weight:700}
+    .subtitle{color:var(--muted);margin:0;font-size:14px}
+    .row{margin-bottom:14px}
+    label{display:block;font-size:14px;color:#4b5563;margin-bottom:6px}
+    .control{width:100%;height:46px;border:1px solid #e5e7eb;border-radius:12px;padding:0 12px;font-size:15px;background:#fff;outline:0;box-sizing:border-box;transition:box-shadow .15s,border-color .15s}
+    .control:focus{border-color:var(--ring);box-shadow:0 0 0 3px rgba(145,185,247,.3)}
+    select.control{appearance:none;-webkit-appearance:none;-moz-appearance:none;
+      background-image:linear-gradient(45deg,transparent 50%,#6b7280 50%),linear-gradient(135deg,#6b7280 50%,transparent 50%),linear-gradient(to right,transparent,transparent);
+      background-position:calc(100% - 20px) calc(50% - 4px),calc(100% - 14px) calc(50% - 4px),calc(100% - 2.2em) .55em;
+      background-size:6px 6px,6px 6px,1px 1.9em;background-repeat:no-repeat;padding-right:42px}
+    .divider{margin:18px 0;border:none;border-top:1px solid #eef0f4}
+    .btn{width:100%;height:50px;border:0;border-radius:14px;font-weight:600;font-size:16px;cursor:pointer}
+    .btn.primary{background-image:linear-gradient(225deg,var(--brand1),var(--brand2));color:#fff}
+    .msg{margin-top:12px;font-size:14px;min-height:1.2em}
+    .msg.success{color:#0d6a2a}.msg.error{color:#b91c1c}
+    /* validation */
+    .control.is-invalid{border-color:#ef4444!important;box-shadow:0 0 0 3px rgba(239,68,68,.2)!important}
+    .control.is-valid{border-color:#16a34a!important;box-shadow:0 0 0 3px rgba(22,163,74,.2)!important}
+    .hidden{display:none!important}
+
+    /* SUCCESS MODAL (как на скрине) */
+    .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:999;background:rgba(0,0,0,.5)}
+    .show{display:block!important}
+    .modal-wrap{
+      width:min(860px,94vw); background:#fff; border-radius:26px; padding:28px; 
+      box-shadow:0 30px 120px rgba(0,0,0,.45);
+    }
+    .brand-band{display:flex;align-items:center;gap:16px;padding:6px 8px 18px}
+    .brand-band img{height:56px;width:auto}
+    .brand-band .partners{margin-left:auto;font-weight:700;letter-spacing:.02em;color:#4b5563}
+    .success-panel{
+      display: none;
+      background:linear-gradient(#ffffff,#fafafa); border-radius:22px; padding:26px; 
+      box-shadow:0 18px 38px rgba(0,0,0,.08) inset, 0 14px 40px rgba(0,0,0,.08);
+      margin:25px 8px 10px;
+    }
+    .success-title{font-size:28px;color:#0d1b2a;margin:0 0 6px;text-align:center;font-weight:800}
+    .success-sub{color:#475569;text-align:center;margin:0 0 18px}
+    .btn-cta{
+      display:inline-flex;align-items:center;justify-content:center;min-width:140px;
+      padding:0 22px;height:46px;border-radius:14px;border:0;cursor:pointer;
+      background-image:linear-gradient(225deg,var(--brand2),var(--brand1));color:#fff;font-weight:700;font-size:16px;
+      box-shadow:0 6px 20px rgba(158,84,187,.35); transition:transform .05s ease}
+    .btn-cta:active{transform:translateY(1px)}
+    .success-cta{display:flex;justify-content:center}
+  </style>
+</head>
+<body>
+
+  <!-- форма -->
+  <div id="card" class="card">
+    <div class="header">
+      <div class="logo">
+        <!-- поставьте свой логотип -->
+        <img src="https://cdn.prod.website-files.com/671cacb5ad794eb512198be7/67bd1dd0b07424fd160bc81e_Asset%203%20(1).svg" alt="swipeyai partners">
+      </div>
+      <div  class="success-panel" id="success-panel">
+        <h2 id="m-title" class="success-title">Registration Completed 🎉</h2>
+        <p class="success-sub">Please check your email to activate your account.</p>
+       
+      </div>
+      <h1 id="reg_title" class="title">Registration</h1>
+      <p id="logo" class="subtitle">Your credentials</p>
+    </div>
+
+    <form id="regForm" novalidate>
+      <div class="row">
+        <label for="email">Login</label>
+        <input id="email" name="email" type="email" placeholder="your@email.com" required class="control" />
+      </div>
+      <div class="row">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Password" minlength="8" required class="control" />
+      </div>
+
+      <hr class="divider" />
+
+      <div class="row">
+        <label for="firstName">First Name</label>
+        <input id="firstName" name="firstName" placeholder="First name" required class="control" />
+      </div>
+      <div class="row">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" name="lastName" placeholder="Last name" required class="control" />
+      </div>
+
+      <div class="row">
+        <label for="messengerType">Messenger type</label>
+        <select id="messengerType" name="messengerType" required class="control">
+          <option value="" disabled selected>Choose…</option>
+          <option>Telegram</option><option>WhatsApp</option><option>Skype</option><option>WeChat</option><option>Other</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label for="messenger">Messenger</label>
+        <input id="messenger" name="messenger" placeholder="Username / Phone / Link" class="control" />
+      </div>
+
+      <button id="submitBtn" class="btn primary" type="submit">Sign Up</button>
+      <div id="msg" class="msg"></div>
+    </form>
+  </div>
+
+  
+
+ <script>
+  /** CONFIG **/
+  const POSTBACK_TYPE = 'registration';          // оставлено, если захотите показать где-то в UI
+  const CLICKID_COOKIE = 'clickid';
+  const CLICKID_TTL_DAYS = 7;
+
+  // элементы
+  const form = document.getElementById('regForm');
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('msg');
+  const card = document.getElementById('card');
+  const overlay = document.getElementById('success-panel');
+  const logo = document.getElementById('logo');
+  const reg_title = document.getElementById('reg_title');
+
+  /** Cookie helpers **/
+  function setCookie(name, value, days){
+    const d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    const expires = "expires="+ d.toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; ${expires}; path=/; SameSite=Lax`;
+  }
+  function getCookie(name){
+    const m = document.cookie.match(new RegExp('(?:^|; )'+name.replace(/[-[\]{}()*+?.,\\^$|#\\s]/g,'\\$&')+'=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+
+  /** ClickID logic **/
+  function readClickIdFromUrl(){
+    const p = new URLSearchParams(location.search);
+    return p.get('clickid') || '';
+  }
+  function saveClickIdIfInUrl(){
+    const cid = readClickIdFromUrl();
+    if (cid) setCookie(CLICKID_COOKIE, cid, CLICKID_TTL_DAYS);
+    return cid;
+  }
+  function getClickId(){
+    return getCookie(CLICKID_COOKIE) || readClickIdFromUrl() || '';
+  }
+  // сохранить clickid при заходе, если есть в URL
+  saveClickIdIfInUrl();
+
+  /** Валидация **/
+  const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, passRe=/^.{8,}$/;
+  function setValid(el, ok){ el.classList.remove('is-valid','is-invalid'); el.classList.add(ok?'is-valid':'is-invalid'); }
+  function validateField(el){
+    const v = el.value.trim();
+    let ok = true;
+    if(el.id==='email') ok = emailRe.test(v);
+    else if(el.id==='password') ok = passRe.test(v);
+    else if(el.id==='firstName'||el.id==='lastName') ok = v.length>0;
+    else if(el.id==='messengerType') ok = !!v;
+    setValid(el, ok); return ok;
+  }
+  ['email','password','firstName','lastName','messenger'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.addEventListener('input',()=>validateField(el));
+    el.addEventListener('blur',()=>validateField(el));
+  });
+  document.getElementById('messengerType').addEventListener('change', e=>validateField(e.target));
+  function validateForm(){
+    return ['email','password','firstName','lastName','messengerType']
+      .map(id=>validateField(document.getElementById(id))).every(Boolean);
+  }
+
+  /** Submit (теперь → /api/lead, без фронтового постбека) **/
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    if(!validateForm()){
+      msg.className='msg error';
+      msg.textContent='Please correct highlighted fields.';
+      return;
+    }
+    msg.textContent=''; btn.disabled=true; btn.textContent='Submitting…';
+
+    const payload={
+      email:form.email.value.trim(),
+      password:form.password.value,
+      firstName:form.firstName.value.trim(),
+      lastName:form.lastName.value.trim(),
+      messengerType:form.messengerType.value,
+      messenger:form.messenger.value.trim(),
+      clickid: getClickId()
+    };
+
+    try{
+      // важное изменение: отправляем на /api/lead (очередь + лог в sheets)
+      const r = await fetch('/api/lead', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const data = await r.json();
+      if(!r.ok) throw new Error(data.error||'Request failed');
+
+      // моментальный «успех» для пользователя
+      form.classList.add('hidden');
+      logo.classList.add('hidden');
+      reg_title.classList.add('hidden');
+      overlay.classList.add('show');
+
+      // постбек уехал на сервер (в воркер), здесь больше ничего не шлём
+    }catch(err){
+      msg.className='msg error';
+      msg.textContent='Error: '+err.message;
+    }finally{
+      btn.disabled=false; btn.textContent='Sign Up';
+    }
+  });
+
+  /** Закрытие модалки **/
+  function closeSuccess(){
+    overlay.classList.remove('show');
+  }
+  closeModal.addEventListener('click', closeSuccess);
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) closeSuccess(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && overlay.classList.contains('show')) closeSuccess(); });
+</script>
+
+
+  
+</body>
+</html>
