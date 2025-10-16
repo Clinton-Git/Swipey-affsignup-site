@@ -85,8 +85,24 @@
 <script>
   const CLICKID_COOKIE='clickid', CLICKID_TTL_DAYS=7, REF_COOKIE='ref', REF_TTL_DAYS=30, UTM_TTL_DAYS=30;
 
-  function setCookie(name,value,days){const d=new Date();d.setTime(d.getTime()+days*864e5);document.cookie=`${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;}
-  function getCookie(name){const m=document.cookie.match(new RegExp('(?:^|; )'+name.replace(/[-[\\]{}()*+?.,^$|#\\s]/g,'\\$&')+'=([^;]*)'));return m?decodeURIComponent(m[1]):'';}
+  function setCookie(name,value,days){
+    const d=new Date();
+    d.setTime(d.getTime()+days*864e5);
+    document.cookie=`${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
+  }
+
+  // ✅ безопасный парсер cookie без RegExp
+  function getCookie(name){
+    const items = document.cookie ? document.cookie.split('; ') : [];
+    for (const item of items) {
+      const eq = item.indexOf('=');
+      const key = eq > -1 ? item.slice(0, eq) : item;
+      if (key === name) {
+        return decodeURIComponent(eq > -1 ? item.slice(eq + 1) : '');
+      }
+    }
+    return '';
+  }
 
   function readClickIdFromUrl(){return new URLSearchParams(location.search).get('clickid')||'';}
   function saveClickIdIfInUrl(){const cid=readClickIdFromUrl();if(cid)setCookie(CLICKID_COOKIE,cid,CLICKID_TTL_DAYS);}
@@ -94,28 +110,61 @@
   saveClickIdIfInUrl();
 
   // --- REF ---
-  (function(){const ref=new URLSearchParams(location.search).get('ref');if(ref)setCookie(REF_COOKIE,ref,REF_TTL_DAYS);})();
+  (function(){
+    const ref=new URLSearchParams(location.search).get('ref');
+    if(ref)setCookie(REF_COOKIE,ref,REF_TTL_DAYS);
+  })();
   function getRef(){return getCookie(REF_COOKIE)||new URLSearchParams(location.search).get('ref')||'';}
 
   // --- UTM ---
-  (function(){const p=new URLSearchParams(location.search);const s=p.get('utm_source');const c=p.get('utm_campaign');if(s)setCookie('utm_source',s,UTM_TTL_DAYS);if(c)setCookie('utm_campaign',c,UTM_TTL_DAYS);})();
+  (function(){
+    const p=new URLSearchParams(location.search);
+    const s=p.get('utm_source');
+    const c=p.get('utm_campaign');
+    if(s)setCookie('utm_source',s,UTM_TTL_DAYS);
+    if(c)setCookie('utm_campaign',c,UTM_TTL_DAYS);
+  })();
   function getUtmSource(){return getCookie('utm_source')||new URLSearchParams(location.search).get('utm_source')||'';}
   function getUtmCampaign(){return getCookie('utm_campaign')||new URLSearchParams(location.search).get('utm_campaign')||'';}
 
-  const form=document.getElementById('regForm'),btn=document.getElementById('submitBtn'),msg=document.getElementById('msg'),
-  overlay=document.getElementById('success-panel'),logo=document.getElementById('logo'),reg_title=document.getElementById('reg_title'),lg=document.getElementById('login');
+  const form=document.getElementById('regForm'),
+        btn=document.getElementById('submitBtn'),
+        msg=document.getElementById('msg'),
+        overlay=document.getElementById('success-panel'),
+        logo=document.getElementById('logo'),
+        reg_title=document.getElementById('reg_title'),
+        lg=document.getElementById('login');
 
-  const emailRe=/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/i,passRe=/^.{8,}$/;
+  // (необязательная косметика) правильные regex без двойных слэшей
+  const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+        passRe=/^.{8,}$/;
+
   function setValid(el,ok){el.classList.remove('is-valid','is-invalid');el.classList.add(ok?'is-valid':'is-invalid');}
-  function validateField(el){const v=el.value.trim();let ok=true;if(el.id==='email')ok=emailRe.test(v);else if(el.id==='password')ok=passRe.test(v);else if(['firstName','lastName'].includes(el.id))ok=v.length>0;else if(el.id==='messengerType')ok=!!v;setValid(el,ok);return ok;}
-  ['email','password','firstName','lastName','messenger'].forEach(id=>{const el=document.getElementById(id);el.addEventListener('input',()=>validateField(el));el.addEventListener('blur',()=>validateField(el));});
+  function validateField(el){
+    const v=el.value.trim();let ok=true;
+    if(el.id==='email') ok=emailRe.test(v);
+    else if(el.id==='password') ok=passRe.test(v);
+    else if(['firstName','lastName'].includes(el.id)) ok=v.length>0;
+    else if(el.id==='messengerType') ok=!!v;
+    setValid(el,ok);return ok;
+  }
+  ['email','password','firstName','lastName','messenger'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.addEventListener('input',()=>validateField(el));
+    el.addEventListener('blur',()=>validateField(el));
+  });
   document.getElementById('messengerType').addEventListener('change',e=>validateField(e.target));
   function validateForm(){return ['email','password','firstName','lastName','messengerType'].map(id=>validateField(document.getElementById(id))).every(Boolean);}
 
   form.addEventListener('submit',async e=>{
     e.preventDefault();
-    if(!validateForm()){msg.className='msg error';msg.textContent='Please correct highlighted fields.';return;}
-    msg.textContent='';btn.disabled=true;btn.textContent='Submitting…';
+    if(!validateForm()){
+      msg.className='msg error';
+      msg.textContent='Please correct highlighted fields.';
+      return;
+    }
+    msg.textContent='';
+    btn.disabled=true; btn.textContent='Submitting…';
 
     const payload={
       email:form.email.value.trim(),
@@ -132,10 +181,22 @@
 
     try{
       const r=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-      const data=await r.json();if(!r.ok)throw new Error(data.error||'Request failed');
-      form.classList.add('hidden');logo.classList.add('hidden');reg_title.classList.add('hidden');lg.classList.add('hidden');overlay.classList.add('show');
-    }catch(err){msg.className='msg error';msg.textContent='Error: '+err.message;}finally{btn.disabled=false;btn.textContent='Sign Up';}
+      const data=await r.json();
+      if(!r.ok) throw new Error(data.error||'Request failed');
+
+      form.classList.add('hidden');
+      logo.classList.add('hidden');
+      reg_title.classList.add('hidden');
+      lg.classList.add('hidden');
+      overlay.classList.add('show');
+    }catch(err){
+      msg.className='msg error';
+      msg.textContent='Error: '+err.message;
+    }finally{
+      btn.disabled=false; btn.textContent='Sign Up';
+    }
   });
 </script>
+
 </body>
 </html>
