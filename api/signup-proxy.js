@@ -1,9 +1,10 @@
 import { chromium } from 'playwright-core';
+import fs from 'fs'; // <-- Добавлено для работы с файлами
 
 /**
  * Env:
- *  - BROWSERLESS_WS: wss://…browserless.io?token=...&stealth=true
- *  - (необяз.) POSTBACK_BASE / POSTBACK_TYPE — если захотите переопределить
+ * - BROWSERLESS_WS: wss://…browserless.io?token=...&stealth=true
+ * - (необяз.) POSTBACK_BASE / POSTBACK_TYPE — если захотите переопределить
  */
 const { BROWSERLESS_WS } = process.env;
 const POSTBACK_BASE = process.env.POSTBACK_BASE || 'https://rtrk.swipey.club/postback';
@@ -63,8 +64,28 @@ async function runSignup(payload) {
       await submit1.click();
     });
 
-    // ждём поля 2-го шага
-    await page.waitForSelector('input[name="firstname"]');
+    // --- БЛОК С ИСПРАВЛЕНИЕМ ---
+    try {
+        // ждём поля 2-го шага
+        await page.waitForSelector('input[name="firstname"]', { timeout: 20000 });
+    } catch (error) {
+        console.error('Не удалось найти поле "firstname". Сохраняю отладочную информацию...');
+        
+        // Делаем скриншот того, что видит браузер
+        await page.screenshot({ path: 'debug_screenshot.png', fullPage: true });
+        
+        // Сохраняем HTML-код страницы
+        const html = await page.content();
+        fs.writeFileSync('debug_page.html', html);
+        
+        console.log(`Отладочный скриншот сохранён в 'debug_screenshot.png'`);
+        console.log(`HTML страницы сохранён в 'debug_page.html'`);
+        console.log(`Текущий URL: ${page.url()}`);
+        
+        // Пробрасываем ошибку дальше, чтобы скрипт остановился
+        throw error;
+    }
+    // --- КОНЕЦ БЛОКА С ИСПРАВЛЕНИЕМ ---
 
     // ШАГ 2
     await page.locator('input[name="firstname"]').fill(firstName);
@@ -81,7 +102,7 @@ async function runSignup(payload) {
       await rsInput.type(String(messengerType), { delay: 20 });
 
       const option = page.locator('.react-select__option, [class*="react-select__option"]')
-                         .filter({ hasText: new RegExp(String(messengerType), 'i') }).first();
+                          .filter({ hasText: new RegExp(String(messengerType), 'i') }).first();
       const hasOption = await option.isVisible().catch(() => false);
       if (hasOption) await option.click(); else await page.keyboard.press('Enter');
 
