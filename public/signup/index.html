@@ -74,7 +74,19 @@
       <hr class="divider" />
       <div class="row"><label for="firstName">First Name</label><input id="firstName" name="firstName" placeholder="First name" required class="control" /></div>
       <div class="row"><label for="lastName">Last Name</label><input id="lastName" name="lastName" placeholder="Last name" required class="control" /></div>
-      <div class="row"><label for="messengerType">Messenger type</label><select id="messengerType" name="messengerType" required class="control"><option value="" disabled selected>Choose…</option><option>Telegram</option><option>WhatsApp</option><option>Skype</option><option>WeChat</option><option>Other</option></select></div>
+      
+      <div class="row">
+          <label for="messengerType">Messenger type</label>
+          <select id="messengerType" name="messengerType" required class="control">
+              <option value="" disabled selected>Choose…</option>
+              <option>Facebook</option>
+              <option>Skype</option>
+              <option>Telegram</option>
+              <option>Phone</option>
+              <option>Other</option>
+          </select>
+      </div>
+      
       <div class="row"><label for="messenger">Messenger</label><input id="messenger" name="messenger" placeholder="Username / Phone / Link" class="control" /></div>
       <button id="submitBtn" class="btn primary" type="submit">Sign Up</button>
       <div id="msg" class="msg"></div>
@@ -91,7 +103,6 @@
     document.cookie=`${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
   }
 
-  // ✅ безопасный парсер cookie без RegExp
   function getCookie(name){
     const items = document.cookie ? document.cookie.split('; ') : [];
     for (const item of items) {
@@ -109,14 +120,12 @@
   function getClickId(){return getCookie(CLICKID_COOKIE)||readClickIdFromUrl()||'';}
   saveClickIdIfInUrl();
 
-  // --- REF ---
   (function(){
     const ref=new URLSearchParams(location.search).get('ref');
     if(ref)setCookie(REF_COOKIE,ref,REF_TTL_DAYS);
   })();
   function getRef(){return getCookie(REF_COOKIE)||new URLSearchParams(location.search).get('ref')||'';}
 
-  // --- UTM ---
   (function(){
     const p=new URLSearchParams(location.search);
     const s=p.get('utm_source');
@@ -135,17 +144,23 @@
         reg_title=document.getElementById('reg_title'),
         lg=document.getElementById('login');
 
-  // (необязательная косметика) правильные regex без двойных слэшей
-  const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
-        passRe=/^.{8,}$/;
+  const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+  // === ИЗМЕНЕНИЕ 2: Новая регулярка для валидации пароля ===
+  // Она проверяет все 4 условия со скриншота + минимальную длину 8 символов.
+  const passRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{8,}$/;
 
   function setValid(el,ok){el.classList.remove('is-valid','is-invalid');el.classList.add(ok?'is-valid':'is-invalid');}
   function validateField(el){
     const v=el.value.trim();let ok=true;
-    if(el.id==='email') ok=emailRe.test(v);
-    else if(el.id==='password') ok=passRe.test(v);
-    else if(['firstName','lastName'].includes(el.id)) ok=v.length>0;
-    else if(el.id==='messengerType') ok=!!v;
+    // Для пароля используется значение без trim(), чтобы пробелы считались ошибкой
+    const passValue = el.id === 'password' ? el.value : v;
+
+    if(el.id==='email') ok=emailRe.test(passValue);
+    else if(el.id==='password') ok=passRe.test(passValue);
+    else if(['firstName','lastName'].includes(el.id)) ok=passValue.length>0;
+    else if(el.id==='messengerType') ok=!!passValue;
+    
     setValid(el,ok);return ok;
   }
   ['email','password','firstName','lastName','messenger'].forEach(id=>{
