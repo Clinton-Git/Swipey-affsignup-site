@@ -21,8 +21,18 @@
         n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);
     </script>
     <link href="/assets/67c03079088d105e005db4fb_Swipey%2032x32.png" rel="shortcut icon" type="image/x-icon">
-    <link href="https://cdn.prod.website-files.com/671cacb5ad794eb512198be7/67c030877255db47325d00a0_Swipey%20256x256.png" rel="apple-touch-icon"><!-- Google tag (gtag.js) -->
+    <link href="https://cdn.prod.website-files.com/671cacb5ad794eb512198be7/67c030877255db47325d00a0_Swipey%20256x256.png" rel="apple-touch-icon">
    <script src="https://rtrk.swipeyai.com/uniclick.js?attribution=lastpaid&cookiedomain=www.swipey.partners&cookieduration=90&defaultcampaignid=68f1f2d4d537925dc1550131&regviewonce=false"></script>
+    <style>
+  /* Добавляем плавный переход для анимации меню */
+  .mobile-menu {
+    transition: transform 0.4s ease-out;
+  }
+  /* Этот класс мы будем добавлять через JS, чтобы запретить прокрутку страницы, когда меню открыто */
+  .no-scroll {
+    overflow: hidden;
+  }
+</style>
 </head>
 
 <body class="body" inject_vt_svd="true">
@@ -331,6 +341,55 @@
     <script src="/assets/webflow.schunk.50d850aa4962b686.js" type="text/javascript"></script>
     <script src="/assets/webflow.schunk.baf1f7c965ee0e48.js" type="text/javascript"></script>
     <script src="/assets/webflow.48ea7eff.89adea7d7e742887.js" type="text/javascript"></script>
+    <script>
+  // Ждем, пока вся страница загрузится
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Находим все нужные элементы на странице
+    const menuOpener = document.querySelector('[data-w-id="2d978827-b48a-6fd8-e680-0627ce3735c0"]'); // Кнопка-бургер
+    const menuCloser = document.querySelector('[data-w-id="1c56ff2b-b182-1b53-8cb4-0124ddb8f6c3"]'); // Крестик для закрытия
+    const mobileMenu = document.querySelector('.mobile-menu'); // Само меню
+    const menuLinks = document.querySelectorAll('.mobile-menu-content a'); // Все ссылки внутри меню
+
+    // --- Функция для открытия меню ---
+    function openMenu() {
+      if (mobileMenu) {
+        // Сдвигаем меню в видимую область
+        mobileMenu.style.transform = 'translate3d(0, 0, 0)';
+        // Запрещаем прокрутку основной страницы
+        document.body.classList.add('no-scroll');
+      }
+    }
+
+    // --- Функция для закрытия меню ---
+    function closeMenu() {
+      if (mobileMenu) {
+        // Прячем меню обратно за экран
+        mobileMenu.style.transform = 'translate3d(100vw, 0, 0)';
+        // Разрешаем прокрутку основной страницы
+        document.body.classList.remove('no-scroll');
+      }
+    }
+
+    // --- Добавляем "слушателей" событий ---
+
+    // 1. При клике на бургер - открываем меню
+    if (menuOpener) {
+      menuOpener.addEventListener('click', openMenu);
+    }
+
+    // 2. При клике на крестик - закрываем меню
+    if (menuCloser) {
+      menuCloser.addEventListener('click', closeMenu);
+    }
+
+    // 3. При клике на любую ссылку в меню - тоже закрываем его
+    menuLinks.forEach(function(link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+  });
+</script>
 <script>
 (function(){
   const params = new URLSearchParams(window.location.search);
@@ -378,6 +437,7 @@
 
 
 </html>
+
 
 
 
